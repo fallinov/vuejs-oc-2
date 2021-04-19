@@ -10,31 +10,12 @@
 
     <section class="menu">
       <h2>Menu</h2>
-      <div v-for="item in simpleMenu" :key="item.name" class="menu-item">
-        <img
-            class="menu-item__image"
-            :src="item.image.source"
-            :alt="item.image.alt"
-        />
-        <div>
-          <h3>{{ item.name }}</h3>
-          <p v-if="item.inStock">En stock</p>
-          <p v-else>En rupture de stock</p>
-          <div>
-            <label for="add-item-quantity"
-            >Quantité : {{ item.quantity }}</label
-            >
-            <input
-                v-model.number="item.quantity"
-                id="add-item-quantity"
-                type="number"
-            />
-            <button @click="addToShoppingCart(item.quantity)">
-              Ajouter au panier d'achat
-            </button>
-          </div>
-        </div>
-      </div>
+      <menu-item
+          v-for="item in simpleMenu"
+          :key="item.name"
+          :item="item"
+          :add-to-shopping-cart="addToShoppingCart"
+      />
     </section>
 
     <aside class="shopping-cart">
@@ -59,8 +40,10 @@
 
 <script>
 
+import MenuItem from "./components/MenuItem";
 export default {
   name: 'App',
+  components: {MenuItem},
   data() {
     return {
       address: "18 avenue du Beurre, Paris, France",
